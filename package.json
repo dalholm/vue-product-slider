@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "A product thumbnail slider and a product card slider",
   "author": "Mikael Dalholm",
-  "homepage": "https://dalholm.github.io/vue-product-card/",
+  "homepage": "https://dalholm.github.io/vue-product-slider/",
   "license": "MIT",
   "module": "dist/index.umd.js",
   "main": "dist/index.umd.min.js",
