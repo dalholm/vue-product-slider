@@ -67,7 +67,7 @@ export default {
 
     computed: {
         _showControls() {
-            if (this.showControls == 'false') {
+            if (this.showControls == 'false' || this.slides.length <= 1) {
                 return false;
             }
             return true;
@@ -77,12 +77,16 @@ export default {
             if (this.slider_element) {
                 return this.slider_element.getElementsByClassName('slide');
             }
+
+            return [];
         },
 
         thumbnails() {
             if (this.thumbnails_element) {
                 return this.thumbnails_element.getElementsByClassName('thumb');
             }
+
+            return [];
         },
     },
     methods: {
@@ -155,6 +159,10 @@ export default {
         },
 
         toggleTumbnail(offset) {
+
+            if (!this.thumbnails.length) {
+                return;
+            }
 
             for(let i = 0; i < this.thumbnails.length; i++) {
                 let elem = this.thumbnails[i];
