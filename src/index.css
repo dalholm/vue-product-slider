@@ -14,8 +14,6 @@
     visibility: hidden;
     position: relative;
     max-width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 8px;
 }
 .vps__slides {
     overflow: hidden;
