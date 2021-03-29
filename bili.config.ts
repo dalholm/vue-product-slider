@@ -13,7 +13,7 @@ const config: Config = {
     dir: 'dist',
     extractCSS: true,
     format: ['esm', 'iife-min', 'cjs', 'cjs-min', 'umd-min'],
-    moduleName: 'vueNestable',
+    moduleName: 'vueProductSlider',
   }
 }
 
