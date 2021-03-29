@@ -2,7 +2,6 @@ var path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const CopyPlugin = require("copy-webpack-plugin")
 
 module.exports = {
   entry: './example/main.js',
@@ -44,11 +43,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'index.html',
       title: process.env.npm_package_description
-    }),
-    new CopyPlugin({
-      patterns: [
-        { from: 'example/img', to: "img" },
-      ],
     }),
 
   ],
