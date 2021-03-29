@@ -2,6 +2,7 @@ var path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const CopyPlugin = require("copy-webpack-plugin")
 
 module.exports = {
   entry: './example/main.js',
@@ -33,7 +34,7 @@ module.exports = {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
-          name: 'img/[name].[hash:8].[ext]'
+          name: 'img/[name].[hash:8].[ext]',
         }
       }
     ]
@@ -43,7 +44,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'index.html',
       title: process.env.npm_package_description
-    })
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: 'example/img', to: "img" },
+      ],
+    }),
+
   ],
   optimization: {
     minimizer: [

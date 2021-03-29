@@ -8,6 +8,6 @@ export {
 // export vue component installer
 export default {
   install: function (Vue, options) {
-    Vue.component('VueProductSlider', VueProductSlider)
+    Vue.component('vue-product-slider', VueProductSlider)
   }
 }

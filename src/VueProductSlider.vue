@@ -1,13 +1,178 @@
 <template>
-    <div>
-        Tjenixen
+    <div
+        class="vps"
+        ref="vps"
+    >
+        <div class="vps__wrapper" ref="vpsWrapper">
+            <div class="vps__slides" >
+                <slot name="slider"/>
+            </div>
+
+            <div class="vps__controls"
+                 v-if="_showControls"
+            >
+                <div class="vps__controls__prev" @click="prev">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </div>
+
+                <div class="vps__controls__next" @click="next">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="vps__thumbnails"
+            ref="thumbnails"
+        >
+            <slot name="thumbnails"/>
+        </div>
     </div>
 </template>
 
 <script>
+
+import Swipe from 'swipejs';
+import './index.css'
+
 export default {
+    props: {
+        showControls: {
+            type: [Boolean, String],
+            default: true,
+        }
+    },
     data() {
-        return {}
-    }
+        return {
+            isTouch: typeof window !== "undefined" && "ontouchstart" in window,
+            dragging: false,
+            dragMomentum: 0,
+            dragOffset: 0,
+            dragStartY: 0,
+            dragStartX: 0,
+
+
+            offset: 0,
+            slider_element: null,
+            thumbnails_element: null,
+
+            swipe: null,
+
+        }
+    },
+
+    computed: {
+        _showControls() {
+            if (this.showControls == 'false') {
+                return false;
+            }
+            return true;
+        },
+
+        slides() {
+            if (this.slider_element) {
+                return this.slider_element.getElementsByClassName('slide');
+            }
+        },
+
+        thumbnails() {
+            if (this.thumbnails_element) {
+                return this.thumbnails_element.getElementsByClassName('thumb');
+            }
+        },
+    },
+    methods: {
+        init() {
+            this.slider_element = this.$refs.vps;
+            this.thumbnails_element = this.$refs.thumbnails;
+
+            if (this.thumbnails.length > 0
+                && this.slides.length != this.thumbnails.length
+            ) {
+                console.error('Slide vs thumbnails count is not the same')
+            }
+
+            this.toggleSlide(0)
+
+
+            let self = this;
+            this.swipe = new Swipe(this.$refs.vpsWrapper, {
+                startSlide: 0,
+                auto: false,
+                speed: 400,
+                draggable: true,
+                continuous: true,
+                disableScroll: false,
+                stopPropagation: false,
+                ignore: ".scroller",
+                callback: function(index, elem, dir) {
+                    self.toggleSlide(index)
+                },
+                transitionEnd: function(index, elem) {}
+            });
+
+
+
+            this.bindEvents()
+        },
+        bindEvents() {
+            let self = this;
+
+            for (let i = 0; i < this.thumbnails.length; i++) {
+                let thumb = this.thumbnails[i];
+
+                thumb.addEventListener('click', function() {
+                    console.log('clicking: ' + i);
+                    self.swipe.slide(i);
+                });
+            }
+        },
+
+        toggleSlide(offset) {
+
+            for(let i = 0; i < this.slides.length; i++) {
+                let elem = this.slides[i];
+                if (elem.classList.contains('active')) {
+                    elem.classList.remove('active');
+                }
+            }
+
+            this.slides[offset].classList.toggle('active')
+            this.offset = offset;
+            this.toggleTumbnail(offset)
+        },
+
+        next() {
+            this.swipe.next();
+        },
+
+        prev() {
+            this.swipe.prev();
+        },
+
+        toggleTumbnail(offset) {
+
+            for(let i = 0; i < this.thumbnails.length; i++) {
+                let elem = this.thumbnails[i];
+                if (elem.classList.contains('active')) {
+                    elem.classList.remove('active');
+                }
+            }
+
+            this.thumbnails[offset].classList.toggle('active')
+        }
+
+    },
+
+    mounted() {
+        this.$nextTick(() => {
+            this.init();
+        })
+
+    },
 }
 </script>
