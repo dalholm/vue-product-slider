@@ -1,8 +1,10 @@
 import VueProductSlider from './VueProductSlider.vue'
+import Swipe from './swipe'
 
 // export named components
 export {
-  VueProductSlider
+  VueProductSlider,
+    Swipe
 }
 
 // export vue component installer

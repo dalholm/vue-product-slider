@@ -36,15 +36,15 @@
 
 <script>
 
-import Swipe from 'swipejs';
-import './index.css'
+import Swipe from "./swipe";
 
 export default {
     props: {
         showControls: {
             type: [Boolean, String],
             default: true,
-        }
+        },
+        
     },
     data() {
         return {
@@ -107,7 +107,6 @@ export default {
             this.swipe = new Swipe(this.$refs.vpsWrapper, {
                 startSlide: 0,
                 auto: false,
-                speed: 400,
                 draggable: true,
                 continuous: true,
                 disableScroll: false,
@@ -130,7 +129,6 @@ export default {
                 let thumb = this.thumbnails[i];
 
                 thumb.addEventListener('click', function() {
-                    console.log('clicking: ' + i);
                     self.swipe.slide(i);
                 });
             }
@@ -184,3 +182,7 @@ export default {
     },
 }
 </script>
+
+<style>
+    @import './swipe.css';
+</style>

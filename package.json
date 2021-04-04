@@ -1,6 +1,6 @@
 {
   "name": "vue-product-slider",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A product thumbnail slider and a product card slider",
   "author": "Mikael Dalholm",
   "homepage": "https://dalholm.github.io/vue-product-slider/",
@@ -39,7 +39,6 @@
   "dependencies": {
     "copy-webpack-plugin": "^6.2.1",
     "immutability-helper": "^3.1.1",
-    "swipejs": "^2.3.1",
     "vue": "^2.6.12"
   },
   "devDependencies": {
